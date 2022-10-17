@@ -14,7 +14,7 @@ export class AudioDevices {
       devices.forEach((device) => {
         console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
       });
-      return devices;
+      return devices.filter(d => d.deviceId !== 'default');
     } catch(error) {
       const err = error as Error;
       console.error(`Error retreiving devices ${err.name}: ${err.message}`);
