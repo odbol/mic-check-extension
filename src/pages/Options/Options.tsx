@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+
 import {AudioDevices} from './AudioDevices';
 
 import {groupBy} from 'lodash';
 
 import './Options.css';
+import {Device} from './Device';
 
 interface Props {
   title: string;
@@ -32,16 +34,6 @@ const Options: React.FC<Props> = (props: Props) => {
       });
   }, [props]);
 
-  const renderDevice = (d: MediaDeviceInfo) => {
-    return (
-      <li className="device" key={d.deviceId + d.groupId}>
-        {d.label}
-        <span>(id: {d.deviceId})</span>
-        <span>(group: {d.groupId})</span>
-      </li>
-    );
-  }
-
   const devicesGrouped = groupBy(devices, d => d.kind);
 
   return <div className="">
@@ -54,10 +46,10 @@ const Options: React.FC<Props> = (props: Props) => {
     {Object.keys(devicesGrouped).map(group => {
       return (
         <div className='group' key={group}>
-          {group}
+          <h4>{group}</h4>
           <ul>
             {devicesGrouped[group]
-              .map(renderDevice)}
+              .map(d => <Device device={d} key={d.deviceId + d.groupId} />)}
           </ul>
         </div>
       );
