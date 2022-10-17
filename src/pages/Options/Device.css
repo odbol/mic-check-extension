@@ -18,3 +18,7 @@
 .device .details span {
   display: block;
 }
+
+.device.favorite {
+  background-color: aquamarine;
+}

@@ -15,6 +15,7 @@ const Options: React.FC<Props> = (props: Props) => {
   const audioDevices = new AudioDevices();
   const [devices, setDevices] = useState<Array<MediaDeviceInfo>>([]);
   const [error, setError] = useState<Error|null>(null);
+  const [useless, setUseless] = useState<MediaDeviceInfo|null>(null);
 
   const loadDevices = () => {
     audioDevices.getDevices()
@@ -36,6 +37,10 @@ const Options: React.FC<Props> = (props: Props) => {
 
   const devicesGrouped = groupBy(devices, d => d.kind);
 
+  const onFavoriteChanged = (device: MediaDeviceInfo) => {
+    setUseless(device);
+  }
+
   return <div className="">
     <h1>{props.title} Page</h1>
 
@@ -49,7 +54,10 @@ const Options: React.FC<Props> = (props: Props) => {
           <h4>{group}</h4>
           <ul>
             {devicesGrouped[group]
-              .map(d => <Device device={d} key={d.deviceId + d.groupId} />)}
+              .map(d => <Device
+                device={d}
+                onFavoriteChanged={onFavoriteChanged}
+                key={d.deviceId + d.groupId} />)}
           </ul>
         </div>
       );
