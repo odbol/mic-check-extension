@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "mic-check-extension",
   "version": "4.3.5",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "description": "A chrome extension to alert you if you are using the wrong audio input",
   "license": "MIT",
   "repository": {
     "type": "git",
