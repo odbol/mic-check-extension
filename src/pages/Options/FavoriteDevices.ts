@@ -1,4 +1,4 @@
-const KEY_FAVORITES = 'KEY_FAVORITES_v1';
+const KEY_FAVORITES = 'KEY_FAVORITES_v2';
 
 export type MediaDeviceId = string;
 
@@ -30,7 +30,7 @@ class FavoriteDevices {
   }
 
   getId(device: MediaDeviceInfo): MediaDeviceId {
-    return device.label + device.groupId + device.kind.toString();
+    return device.label + device.kind.toString();
   }
 }
 
