@@ -1,7 +1,7 @@
 {
   "name": "mic-check-extension",
   "version": "4.3.5",
-  "description": "A chrome extension to alert you if you are using the wrong audio input",
+  "description": "Alerts you if your favorite mic or camera is disconnected",
   "license": "MIT",
   "repository": {
     "type": "git",
