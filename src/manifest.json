@@ -20,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["https://*.zoom.com/*", "https://meet.google.com/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
