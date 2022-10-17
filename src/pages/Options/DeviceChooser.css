@@ -1,0 +1,9 @@
+.group {
+  width: 600px;
+  margin: auto;
+}
+
+.group ul {
+  margin: 0;
+  padding: 0;
+}

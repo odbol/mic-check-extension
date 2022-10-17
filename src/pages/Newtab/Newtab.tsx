@@ -5,6 +5,7 @@ import ic_mic from '../../assets/img/ic_mic.svg';
 import ic_mic_off from '../../assets/img/ic_mic_off.svg';
 
 import {AudioDevices} from '../Options/AudioDevices';
+import DeviceChooser from '../Options/DeviceChooser';
 import {MediaDeviceId} from '../Options/FavoriteDevices';
 import {checkForUnavailableDevices} from '../Options/FavoritesChecker';
 import './Newtab.css';
@@ -43,6 +44,7 @@ const Newtab = () => {
   const [devices, setDevices] = useState<Array<MediaDeviceInfo>>([]);
   const [error, setError] = useState<Error|null>(null);
   const [isAvailable, setIsAvailable] = useState(true);
+  const [isChooserOpen, setChooserOpen] = useState(false);
 
   const loadDevices = () => {
     audioDevices.getDevices()
@@ -59,9 +61,16 @@ const Newtab = () => {
           onAvailablility={setIsAvailable} />
       </header>
       <div>
-        <button onClick={loadDevices}>Choose favorite devices</button>
+        { isChooserOpen ?
+            <DeviceChooser />
+          :
+            <div>
+              <button onClick={() => setChooserOpen(true)}>Choose favorite devices</button>
 
-        <button onClick={loadDevices}>Refresh devices</button>
+              <button onClick={loadDevices}>Refresh devices</button>
+            </div>
+        }
+
         <p>
           Mic check: checks that your favorite microphone or camera is plugged in and detected.
         </p>
