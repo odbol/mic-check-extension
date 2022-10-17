@@ -15,7 +15,7 @@ const Options: React.FC<Props> = (props: Props) => {
   const audioDevices = new AudioDevices();
   const [devices, setDevices] = useState<Array<MediaDeviceInfo>>([]);
   const [error, setError] = useState<Error|null>(null);
-  const [useless, setUseless] = useState<MediaDeviceInfo|null>(null);
+  const [useless, setUseless] = useState<number>(0);
 
   const loadDevices = () => {
     audioDevices.getDevices()
@@ -38,7 +38,7 @@ const Options: React.FC<Props> = (props: Props) => {
   const devicesGrouped = groupBy(devices, d => d.kind);
 
   const onFavoriteChanged = (device: MediaDeviceInfo) => {
-    setUseless(device);
+    setUseless(Date.now());
   }
 
   return <div className="">
