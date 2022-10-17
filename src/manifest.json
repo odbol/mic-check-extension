@@ -12,7 +12,8 @@
     "default_icon": "icon-34.png"
   },
   "icons": {
-    "128": "icon-128.png"
+    "48": "ic_mic_48px.png",
+    "128": "ic_mic_128px.png"
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
