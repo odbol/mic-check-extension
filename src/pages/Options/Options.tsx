@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {AudioDevices} from './AudioDevices';
 
+import {groupBy} from 'lodash';
+
 import './Options.css';
 
 interface Props {
@@ -18,24 +20,48 @@ const Options: React.FC<Props> = (props: Props) => {
       .catch(setError);
   };
 
+  useEffect(() => {
+    audioDevices.checkPermissions()
+      .then(isGranted => {
+        if (isGranted) {
+          return loadDevices();
+        }
+      })
+      .catch(e => {
+        setError(new Error('Permissions not granted: please click refresh and grant permissions'));
+      });
+  }, [props]);
+
+  const renderDevice = (d: MediaDeviceInfo) => {
+    return (
+      <li className="device" key={d.deviceId + d.groupId}>
+        {d.label}
+        <span>(id: {d.deviceId})</span>
+        <span>(group: {d.groupId})</span>
+      </li>
+    );
+  }
+
+  const devicesGrouped = groupBy(devices, d => d.kind);
+
   return <div className="">
     <h1>{props.title} Page</h1>
 
-    Available audio devices:
+    <h2>Available audio devices</h2>
 
     <button onClick={loadDevices}>Refresh devices</button>
 
-    <ul>
-    {devices.map(d => {
+    {Object.keys(devicesGrouped).map(group => {
       return (
-        <li className="device" key={d.deviceId + d.groupId}>
-          {d.label}
-          <span>(id: {d.deviceId})</span>
-          <span>(group: {d.groupId})</span>
-        </li>
+        <div className='group' key={group}>
+          {group}
+          <ul>
+            {devicesGrouped[group]
+              .map(renderDevice)}
+          </ul>
+        </div>
       );
     })}
-    </ul>
 
     {error && <p className='error'>{error.toString()}</p>}
 

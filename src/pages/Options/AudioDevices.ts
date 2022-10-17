@@ -33,8 +33,7 @@ export class AudioDevices {
       navigator.permissions.query({ name })
     ));
 
-    // @ts-ignore
-    return statuses.some(status => status.status === 'granted');
+    return statuses.some(status => status.state === 'granted');
   }
 
   async askForPermissions(): Promise<Boolean> {
@@ -43,6 +42,7 @@ export class AudioDevices {
         audio: true,
         video: true
       });
+      return true;
     } catch (e) {
       console.error('Error starting mediastream', e);
       throw new Error('Error starting video/audio: please grant permission');
