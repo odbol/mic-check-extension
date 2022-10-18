@@ -28,11 +28,12 @@ class FavoriteDevicesRemote implements FavoriteDevices {
       }
     }
 
-    localStorage.setItem(KEY_FAVORITES, JSON.stringify(favorites));
+    await chrome.storage.local.set({[KEY_FAVORITES]: JSON.stringify(favorites)});
   }
 
   async getFavorites(): Promise<Favorites> {
-    const favoritesJson = localStorage.getItem(KEY_FAVORITES);
+    const result = await chrome.storage.local.get([KEY_FAVORITES]);
+    const favoritesJson = result ? result[KEY_FAVORITES] : undefined;
     let favorites = favoritesJson ? JSON.parse(favoritesJson) : {};
 
     return favorites;

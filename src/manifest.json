@@ -3,7 +3,8 @@
   "name": "Mic Check",
   "description": "Alerts you if your favorite mic or camera is disconnected",
   "permissions": [
-    "notifications"
+    "notifications",
+    "storage"
   ],
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },

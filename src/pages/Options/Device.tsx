@@ -28,6 +28,7 @@ export function Device (props: IDeviceProps) {
 
   const onClicked = async (ev: any) => {
     await favoriteDevices.setFavorite(d, !isFavorite);
+    setIsFavorite(!isFavorite);
     props.onFavoriteChanged(d);
   };
 
