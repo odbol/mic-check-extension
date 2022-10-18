@@ -1,0 +1,32 @@
+.micCheckNotification {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+
+  width: 300px;
+  height: 100px;
+  padding: 1em 1.5em;
+
+  background-color: #ffd3d3;
+  color: #010;
+
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px;
+
+  z-index: 100000;
+
+  transition: all 0.25s ease-in;
+  opacity: 0;
+}
+
+.micCheckNotification.shown {
+  opacity: 1;
+}
+
+.micCheckNotification h2 {
+  font-size: 1.25em;
+  padding-left: 1.5em;
+  /* note: this URL doesn't work. have to inject using JS */
+  background: url(/ic_mic_off_48px.png) left center no-repeat;
+  background-size: contain;
+}
