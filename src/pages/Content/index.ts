@@ -12,15 +12,18 @@ checkForUnavailableDevices()
     console.log('Checked devices');
 
     if (unavailableFavs.length > 0) {
-      chrome.notifications.create('reminder', {
-        type: 'basic',
-        iconUrl: 'icon-128.png',
-        title: 'Device not plugged in?',
-        message: `Can't find AV device ${unavailableFavs[0]}. Is it plugged in?`,
-        buttons: [
-          { title: 'Keep it Flowing.' }
-        ],
-        priority: 0
+      chrome.runtime.sendMessage('', {
+        type: 'notification',
+        options: {
+          type: 'basic',
+          iconUrl: 'ic_mic_off_128px.png',
+          title: 'Device not plugged in?',
+          message: `Can't find AV device ${unavailableFavs[0]}. Is it plugged in?`,
+          buttons: [
+            { title: 'Keep it Flowing.' }
+          ],
+          priority: 0
+        }
       });
     }
   });
