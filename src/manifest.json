@@ -21,7 +21,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*.zoom.com/*", "https://meet.google.com/*"],
+      "matches": ["https://*.zoom.com/*", "https://*.zoom.us/*", "https://meet.google.com/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
