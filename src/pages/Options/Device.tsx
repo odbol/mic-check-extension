@@ -2,7 +2,7 @@ import * as React from 'react';
 import {includes} from 'lodash';
 
 import './Device.css';
-import {favoriteDevices} from './FavoriteDevices';
+import {favoriteDevices, getFavoriteId} from './FavoriteDevices';
 
 export interface IDeviceProps {
   device: MediaDeviceInfo;
@@ -10,19 +10,24 @@ export interface IDeviceProps {
 }
 
 export function Device (props: IDeviceProps) {
+  const [isFavorite, setIsFavorite] = React.useState(false);
   const d = props.device;
-  const id = favoriteDevices.getId(d);
+  const id = getFavoriteId(d);
 
-  const favs = favoriteDevices.getFavorites();
-  const isFavorite = includes(favs, id);
+  React.useEffect(() => {
+    favoriteDevices.getFavorites()
+      .then(favs => {
+        setIsFavorite(includes(favs, id));
+      });
+  }, [props]);
 
   const onChanged = (ev: React.ChangeEvent<HTMLInputElement>) => {
     favoriteDevices.setFavorite(d, ev.target.checked);
     // props.onFavoriteChanged(d);
   };
 
-  const onClicked = (ev: any) => {
-    favoriteDevices.setFavorite(d, !isFavorite);
+  const onClicked = async (ev: any) => {
+    await favoriteDevices.setFavorite(d, !isFavorite);
     props.onFavoriteChanged(d);
   };
 

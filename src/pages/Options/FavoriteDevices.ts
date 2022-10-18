@@ -6,10 +6,19 @@ export interface Favorites {
   [type: string]: MediaDeviceId
 }
 
-class FavoriteDevices {
-  setFavorite(device: MediaDeviceInfo, isFavorite: boolean) {
-    const favorites = this.getFavorites();
-    const id = this.getId(device);
+export function getFavoriteId(device: MediaDeviceInfo): MediaDeviceId {
+  return device.label + device.kind.toString();
+}
+
+export interface FavoriteDevices {
+  setFavorite(device: MediaDeviceInfo, isFavorite: boolean): Promise<void>;
+  getFavorites(): Promise<Favorites>;
+}
+
+class FavoriteDevicesRemote implements FavoriteDevices {
+  async setFavorite(device: MediaDeviceInfo, isFavorite: boolean) {
+    const favorites = await this.getFavorites();
+    const id = getFavoriteId(device);
 
     if (isFavorite) {
       favorites[device.kind.toString()] = id;
@@ -22,16 +31,12 @@ class FavoriteDevices {
     localStorage.setItem(KEY_FAVORITES, JSON.stringify(favorites));
   }
 
-  getFavorites(): Favorites {
+  async getFavorites(): Promise<Favorites> {
     const favoritesJson = localStorage.getItem(KEY_FAVORITES);
     let favorites = favoritesJson ? JSON.parse(favoritesJson) : {};
 
     return favorites;
   }
-
-  getId(device: MediaDeviceInfo): MediaDeviceId {
-    return device.label + device.kind.toString();
-  }
 }
 
-export const favoriteDevices = new FavoriteDevices();
+export const favoriteDevices = new FavoriteDevicesRemote();

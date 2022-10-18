@@ -1,4 +1,4 @@
-import {favoriteDevices, MediaDeviceId} from '../Options/FavoriteDevices';
+import {favoriteDevices, getFavoriteId, MediaDeviceId} from '../Options/FavoriteDevices';
 import {AudioDevices} from '../Options/AudioDevices';
 import {includes} from 'lodash';
 
@@ -7,9 +7,9 @@ const audioDevices = new AudioDevices();
 export async function checkForUnavailableDevices(): Promise<Array<MediaDeviceId>> {
   if (await audioDevices.checkPermissions()) {
     const devices = await audioDevices.getDevices();
-    const favorites = favoriteDevices.getFavorites();
+    const favorites = await favoriteDevices.getFavorites();
 
-    const availableIds = devices.map(d => favoriteDevices.getId(d));
+    const availableIds = devices.map(d => getFavoriteId(d));
 
     const unavailableFavs = Object.values(favorites).filter(fav => !includes(availableIds, fav));
 
