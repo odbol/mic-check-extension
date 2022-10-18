@@ -14,14 +14,14 @@ export async function checkForUnavailableDevices(): Promise<Array<MediaDeviceId>
     const unavailableFavs = Object.values(favorites).filter(fav => !includes(availableIds, fav));
 
     if (unavailableFavs.length > 0) {
-      console.log('found favorites that are unavailable', unavailableFavs);
+      console.log('Mic check: found favorites that are unavailable', unavailableFavs);
 
       return unavailableFavs;
     } else {
-      console.log('All devices accounted for', devices);
+      console.log('Mic check: All devices accounted for', devices);
     }
   } else {
-    console.error('No permissions');
+    console.log('Mic check: No permissions on this site');
   }
 
   return [];
